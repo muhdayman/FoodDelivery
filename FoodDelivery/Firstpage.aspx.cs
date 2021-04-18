@@ -1,4 +1,4 @@
-﻿using java.lang;
+using java.lang;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,20 +13,22 @@ namespace Testlagi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
+            if (Session["sid"] == null)
             {
+                //description: when the session gets timed out, the page is redirected to appropriate page.
+                Response.Redirect("Default.aspx", false);
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+                return;
+            }
+            else
+            {
+                // code for the Page starts
                 Label1.Text = Session["sid"].ToString();
+
+                Label2.Text = Session["uid"].ToString();
             }
-            catch (NullPointerException)
-            {
-                Response.Redirect("Default.aspx");
-            }
-            if (Label1.Text == null)
-                {
-                    Response.Redirect("Default.aspx");
-                }
-            
-            Label2.Text = Session["uid"].ToString();
+
+
         }
         protected void Button1_Click(object sender, EventArgs e)
         {
