@@ -1,4 +1,4 @@
-﻿using java.lang;
+using java.lang;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,17 +16,18 @@ namespace Testlagi
         SqlConnection con = new SqlConnection("Data Source=DESKTOP-RR39BKF\\SQLEXPRESS;Initial Catalog=FoodDelivery;Integrated Security=True");
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
+
+            if (Session["sid"] == null)
             {
+                //description: when the session gets timed out, the page is redirected to appropriate page.
+                Response.Redirect("Default.aspx", false);
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+                return;
+            }
+            else
+            {
+                // code for the Page starts
                 Label1.Text = Session["sid"].ToString();
-            }
-            catch (NullPointerException)
-            {
-                Response.Redirect("Default.aspx");
-            }
-            if (Label1.Text == null)
-            {
-                Response.Redirect("Default.aspx");
             }
 
             if (!IsPostBack)
